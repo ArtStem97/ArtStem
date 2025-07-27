@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>아트스템</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+    body {
+      background: #181c22;
+      position: relative;
+      color: #fff;
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 0;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: 
+        radial-gradient(circle at 80% 90%, rgba(255,59,48,0.10) 0, rgba(255,59,48,0) 60%),
+        url('Img/viking.png');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.3;
+    }
+    header {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      background: rgba(24,28,34,0.65);
+      z-index: 100;
+      box-shadow: 0 2px 16px #0004;
+      backdrop-filter: blur(6px);
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 0 0 32px;
+    }
+    .logo-area img {
+      width: 40px; height: 40px; border-radius: 12px; background: #fff2;
+    }
+    .logo-area span {
+      font-size: 1.7rem; font-weight: 700; letter-spacing: 0.04em;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      padding-bottom: 8px;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 18px 0;
+      border-bottom: 2px solid transparent;
+      transition: border 0.2s, color 0.2s;
+    }
+    nav a:hover, nav a.active {
+      color: #1a73e8;
+      border-bottom: 2px solid #1a73e8;
+    }
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 70vh;
+      min-height: 400px;
+      max-height: 70vh;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+      margin-top: 0;
+      z-index: 1;
+    }
+    .hero video {
+      position: absolute;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      object-fit: cover;
+      z-index: 0;
+      filter: brightness(0.5) blur(1px);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      text-shadow: 0 2px 16px #000a;
+      background: rgba(24,28,34,0.4);
+      border-radius: 24px;
+      padding: 40px 32px;
+      backdrop-filter: blur(2px);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .hero-content h1 {
+      font-size: 2.8rem;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 0;
+    }
+    .category-section {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      margin: 80px auto 0 auto;
+      max-width: 1200px;
+      flex-wrap: wrap;
+    }
+    .category-card {
+      flex: 1 1 320px;
+      min-width: 320px;
+      max-width: 400px;
+      height: 340px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 32px;
+      box-shadow: 0 4px 24px #0003;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(.4,2,.3,1), box-shadow 0.3s, filter 0.3s;
+      margin-bottom: 32px;
+    }
+    .category-card:hover {
+      transform: scale(1.05) translateY(-8px);
+      box-shadow: 0 8px 32px #1a73e8aa, 0 2px 16px #0006;
+      filter: brightness(1.08);
+      z-index: 3;
+    }
+    .category-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.5;
+      z-index: 0;
+      transition: opacity 0.3s;
+    }
+    .category-card:hover .category-bg {
+      opacity: 0.7;
+    }
+    .category-label {
+      position: relative;
+      z-index: 2;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 32px 32px;
+      color: #fff;
+      text-shadow: 0 2px 8px #000a;
+      background: rgba(24,28,34,0.5);
+      padding: 16px 32px;
+      border-radius: 20px;
+      backdrop-filter: blur(1px);
+      transition: background 0.3s;
+    }
+    .category-card:hover .category-label {
+      background: #1a73e8cc;
+      color: #fff;
+    }
+    section {
+      max-width: 1100px;
+      margin: 60px auto;
+      background: rgba(24,28,34,0.85);
+      border-radius: 24px;
+      box-shadow: 0 2px 16px #0002;
+      padding: 48px 36px;
+      position: relative;
+      z-index: 2;
+      display: none;
+    }
+    section.active {
+      display: block;
+    }
+    h2 {
+      color: #1a73e8;
+      margin-bottom: 24px;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .services { display: flex; gap: 32px; flex-wrap: wrap; }
+
+    .portfolio { display: flex; gap: 24px; flex-wrap: wrap; }
+    .portfolio img { width: 220px; height: 140px; object-fit: cover; border-radius: 8px; }
+    footer { background: #222; color: #fff; text-align: center; padding: 32px 0; margin-top: 60px; }
+    @media (max-width: 1100px) {
+      .categories { flex-wrap: wrap; gap: 18px; }
+      .category-box { min-width: 180px; max-width: 100%; height: 220px; }
+    }
+    @media (max-width: 700px) {
+      .categories { flex-direction: column; align-items: center; }
+      .category-box { width: 90vw; min-width: unset; height: 160px; }
+      section { padding: 24px 8px; }
+      .hero-content h1 { font-size: 2rem; }
+    }
+    .main-portfolio-slider { max-width: 1200px; margin: 40px auto 0 auto; }
+    .main-portfolio-slider h2 { color: #fff; font-size: 1.5rem; margin-bottom: 18px; }
+    .slider-track { display: flex; gap: 32px; overflow-x: auto; padding-bottom: 8px; }
+    .slider-item { min-width: 320px; max-width: 340px; background: rgba(24,28,34,0.7); border-radius: 20px; box-shadow: 0 2px 12px #0003; position: relative; overflow: hidden; }
+    .slider-item img, .slider-item video { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .slider-desc { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(24,28,34,0.7); color: #fff; padding: 14px 18px; font-size: 1.1rem; font-weight: 500; }
+    .portfolio-tabs { display: flex; gap: 12px; margin-bottom: 24px; }
+    .tab-btn { background: #222; color: #fff; border: none; border-radius: 8px 8px 0 0; padding: 12px 28px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s; display: block; }
+    .tab-btn.active, .tab-btn:hover { background: #1a73e8; color: #fff; z-index: 2; }
+    .portfolio-tab-content { display: none; }
+    .portfolio-tab-content.active { display: block; }
+    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
+    .portfolio-card { background: rgba(255,255,255,0.08); border-radius: 18px; box-shadow: 0 2px 12px #0002; overflow: hidden; display: flex; flex-direction: column; }
+    .portfolio-card img, .portfolio-card video { width: 100%; height: 200px; object-fit: cover; }
+    .portfolio-info { padding: 18px 16px; color: #fff; }
+    .portfolio-info h3 { margin: 0 0 8px 0; font-size: 1.2rem; color: #1a73e8; }
+    .portfolio-info p { margin: 0; font-size: 1rem; color: #eee; }
+    @media (max-width: 900px) { .slider-item, .portfolio-card { min-width: 220px; } .portfolio-grid { grid-template-columns: 1fr; } }
+    .modal {
+      display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.85); align-items: center; justify-content: center; flex-direction: column;
+    }
+    .modal-content { margin-bottom: 18px; }
+    .modal-close {
+      position: absolute; top: 32px; right: 48px; font-size: 2.5rem; color: #fff; cursor: pointer; z-index: 10001;
+    }
+    .modal-desc { color: #fff; font-size: 1.1rem; max-width: 90vw; text-align: center; }
+    @media (max-width: 700px) {
+      .modal-close { top: 12px; right: 18px; font-size: 2rem; }
+    }
+    .scroll-section {
+      width: 100vw;
+      min-height: 400px;
+      background: #111;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 80px 0 60px 8vw;
+      overflow: hidden;
+    }
+    .scroll-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(26,115,232,0.08) 0, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255,59,48,0.05) 0, transparent 50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .scroll-section h1 {
+      font-size: 4vw;
+      font-weight: 900;
+      color: #fff;
+      margin: 0 0 32px 0;
+      letter-spacing: -0.02em;
+      z-index: 2;
+      position: relative;
+    }
+    .scroll-section .desc {
+      color: #ccc;
+      font-size: 1.3rem;
+      max-width: 700px;
+      margin-bottom: 40px;
+      z-index: 2;
+      position: relative;
+    }
+    .scroll-section .card-row {
+      display: flex;
+      gap: 40px;
+      z-index: 2;
+      position: relative;
+    }
+    .scroll-section .card {
+      background: rgba(24,28,34,0.85);
+      border-radius: 18px;
+      box-shadow: 0 2px 12px #0003;
+      padding: 32px 28px;
+      min-width: 220px;
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-align: center;
+      border: 1.5px solid #333;
+    }
+    .scroll-section .card strong {
+      display: block;
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+      color: #1a73e8;
+    }
+    .scroll-section .img-row {
+      display: flex;
+      gap: 32px;
+      margin-top: 40px;
+      z-index: 2;
+      position: relative;
+    }
+    .scroll-section .img-card {
+      position: relative;
+      width: 220px;
+      height: 160px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px #0005;
+      background: #222;
+      display: flex;
+      align-items: flex-end;
+      cursor: pointer;
+    }
+    .scroll-section .img-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .scroll-section .img-card:hover img {
+      transform: scale(1.08);
+    }
+    .scroll-section .img-card .img-desc {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      background: rgba(24,28,34,0.7);
+      color: #fff; font-size: 1rem; padding: 10px 14px;
+      border-radius: 0 0 16px 16px;
+    }
+    .scroll-bg-text {
+      width: 100vw;
+      height: 70px;
+      overflow: hidden;
+      pointer-events: none;
+      background: #181c22;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+    }
+    .scroll-bg-text::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(90deg, transparent 0%, rgba(26,115,232,0.03) 50%, transparent 100%),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="0.5" fill="rgba(26,115,232,0.02)"/></svg>');
+      pointer-events: none;
+    }
+    .scroll-bg-text .text-track {
+      white-space: nowrap;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #fff;
+      opacity: 0.08;
+      letter-spacing: 0.1em;
+      animation: scrollText 18s linear infinite;
+      padding-left: 2vw;
+      position: relative;
+      z-index: 1;
+    }
+    @keyframes scrollText {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .point {
+      color: #1a73e8;
+    }
+    .button-primary {
+      background: #FF3B30;
+      color: #fff;
+      border-radius: 8px;
+      border: none;
+      padding: 12px 28px;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+    .button-primary:hover {
+      background: #b71c1c;
+    }
+    /* Scroll Animation Styles */
+    .scroll-animate {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(.4,2,.3,1), transform 0.8s cubic-bezier(.4,2,.3,1);
+      will-change: opacity, transform;
+    }
+    .scroll-animate.active {
+      opacity: 1;
+      transform: none;
+    }
+    .scroll-animate-fade {
+      opacity: 0;
+      transition: opacity 1s cubic-bezier(.4,2,.3,1);
+    }
+    .scroll-animate-fade.active {
+      opacity: 1;
+    }
+    .scroll-animate-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.8s, transform 0.8s;
+    }
+    .scroll-animate-left.active {
+      opacity: 1;
+      transform: none;
+    }
+    .scroll-animate-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.8s, transform 0.8s;
+    }
+    .scroll-animate-right.active {
+      opacity: 1;
+      transform: none;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-area scroll-animate" onclick="backToMain()" style="cursor:pointer;">
+      <img src="https://via.placeholder.com/40x40?text=AS" alt="ArtStem Logo">
+      <span id="logo-text">ArtStem</span>
+    </div>
+
+    <nav class="scroll-animate">
+      <a href="#" onclick="backToMain();return false;">Home</a>
+      <a href="#" onclick="showSection('about');return false;">About</a>
+      <a href="#" onclick="showSection('portfolio');return false;">Portfolio</a>
+      <a href="#" onclick="showSection('contact');return false;">Contact</a>
+    </nav>
+  </header>
+  <div id="main-view">
+    <div class="hero scroll-animate">
+      <video src="videos/3d-tech-bg.mp4" autoplay loop muted playsinline></video>
+      <!-- 샌드박스 스타일 대형 타이포/배경 섹션 -->
+      <section class="scroll-section scroll-animate" style="position: absolute; bottom: 0; left: 0; right: 0; background: transparent; padding: 40px 8vw;">
+        <h1>WE CREATE BETTER TOGETHER</h1>
+        <div class="desc">ArtStem works with you to realize your vision and provides the best 3D art resources.<br>Experts in modeling, rigging, animation, tool development, and Unreal Engine projects collaborate together.</div>
+      </section>
+    </div>
+    <!-- 대표 포트폴리오 슬라이더 -->
+    <div class="main-portfolio-slider scroll-animate">
+      <h2 class="scroll-animate">Main Portfolio</h2>
+      <div class="slider-track">
+        <div class="slider-item scroll-animate" style="transition-delay:0.1s;" onclick="openModal('img', 'Img/viking.png', 'Viking Warrior Modeling (Created for portfolio purposes only, not for commercial use)')">
+          <img src="Img/viking.png" alt="Viking Warrior Modeling">
+          <div class="slider-desc">Viking Warrior Character Modeling</div>
+        </div>
+        <div class="slider-item scroll-animate" style="transition-delay:0.2s;" onclick="openModal('video', 'video/남전사공격01.mp4', 'In-game Combo Attack Animation')">
+          <video src="video/남전사공격01.mp4" autoplay loop muted playsinline style="width:100%;height:200px;object-fit:cover;"></video>
+          <div class="slider-desc">In-game Combat Animation</div>
+        </div>
+        <div class="slider-item scroll-animate" style="transition-delay:0.3s;" onclick="openModal('img', 'Img/3d웹툰모델링.jpg', '3D Webtoon Character Modeling')">
+          <img src="Img/3d웹툰모델링.jpg" alt="3D Webtoon Character">
+          <div class="slider-desc">3D Webtoon Character Design</div>
+        </div>
+        <div class="slider-item scroll-animate" style="transition-delay:0.4s;" onclick="openModal('youtube', 'EvPNwkK8nVU', 'BipedToJointLinker (Biped to FBX Link 3dsMax Script)')">
+          <img src="https://img.youtube.com/vi/EvPNwkK8nVU/maxresdefault.jpg" alt="BipedToJointLinker Tool" style="width:100%;height:200px;object-fit:cover;">
+          <div class="slider-desc">3dsMax Script Development</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section id="about" class="scroll-animate">
+    <h2 class="scroll-animate">About Us</h2>
+    <p class="scroll-animate">ArtStem is a specialized studio in 3D art outsourcing.<br>We deliver optimal results tailored to client needs based on extensive project experience and know-how.</p>
+    <div class="services">
+      <div class="service scroll-animate-left">
+        <h3 class="scroll-animate">3D Modeling</h3>
+        <p class="scroll-animate">Character, environment, and prop 3D modeling</p>
+      </div>
+      <div class="service scroll-animate-left">
+        <h3 class="scroll-animate">Texturing & Shading</h3>
+        <p class="scroll-animate">High-quality textures and PBR shading support</p>
+      </div>
+      <div class="service scroll-animate-left">
+        <h3 class="scroll-animate">Animation</h3>
+        <p class="scroll-animate">3D animation for games and videos</p>
+      </div>
+      <div class="service scroll-animate-left">
+        <h3 class="scroll-animate">Concept Art & Design</h3>
+        <p class="scroll-animate">Concept art and design for pre-production</p>
+      </div>
+    </div>
+  </section>
+  <section id="portfolio" class="scroll-animate">
+    <h2 class="scroll-animate"><span class="point">OUR</span> PORTFOLIO</h2>
+    <div class="portfolio-tabs">
+      <button class="tab-btn" id="tab-modeling" onclick="showPortfolioTab('modeling');return false;">Modeling</button>
+      <button class="tab-btn" id="tab-animation" onclick="showPortfolioTab('animation');return false;">Animation</button>
+      <button class="tab-btn" id="tab-tool" onclick="showPortfolioTab('tool');return false;">Tool Development</button>
+    </div>
+    <div class="portfolio-tab-content" id="portfolio-modeling">
+      <div class="portfolio-grid">
+        <div class="portfolio-card scroll-animate" onclick="openModal('img', 'Img/viking.png', 'Viking Warrior Modeling (Created for portfolio purposes only, not for commercial use)')">
+          <img src="Img/viking.png" alt="Viking Warrior Modeling">
+          <div class="portfolio-info"><h3>Viking Warrior</h3><p>Character Modeling</p></div>
+        </div>
+        <div class="portfolio-card scroll-animate" onclick="openModal('img', 'Img/3d웹툰모델링.jpg', '3D Webtoon Character Modeling')">
+          <img src="Img/3d웹툰모델링.jpg" alt="3D Webtoon Character Modeling">
+          <div class="portfolio-info"><h3>3D Webtoon Character</h3><p>Character Modeling</p></div>
+        </div>
+        <div class="portfolio-card scroll-animate" onclick="openModal('video', 'video/판다1차모델링.mp4', '3D Cartoon Panda Modeling')">
+          <video src="video/판다1차모델링.mp4" autoplay loop muted playsinline></video>
+          <div class="portfolio-info"><h3>3D Cartoon Panda</h3><p>Character Modeling</p></div>
+        </div>
+        <div class="portfolio-card scroll-animate" onclick="openModal('img', 'Img/판타배경1.png', '3D Cartoon Panda Background Object Modeling')">
+          <img src="Img/판타배경1.png" alt="3D Cartoon Panda Background">
+          <div class="portfolio-info"><h3>Panda Background</h3><p>Environment Modeling</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-tab-content" id="portfolio-animation">
+      <div class="portfolio-grid">
+        <div class="portfolio-card scroll-animate" onclick="openModal('video', 'video/남전사공격01.mp4', 'In-game Combo Attack Animation')">
+          <video src="video/남전사공격01.mp4" autoplay loop muted playsinline></video>
+          <div class="portfolio-info"><h3>Male Warrior Attack 01</h3><p>In-game Combo Animation</p></div>
+        </div>
+        <div class="portfolio-card scroll-animate" onclick="openModal('video', 'video/남전사공격02.mp4', 'In-game Action Sequence')">
+          <video src="video/남전사공격02.mp4" autoplay loop muted playsinline></video>
+          <div class="portfolio-info"><h3>Male Warrior Attack 02</h3><p>In-game Action Sequence</p></div>
+        </div>
+        <div class="portfolio-card scroll-animate" onclick="openModal('video', 'video/집짓기.mp4', 'Casual Game Animation (Created for portfolio purposes only, not for commercial use)')">
+          <video src="video/집짓기.mp4" autoplay loop muted playsinline></video>
+          <div class="portfolio-info"><h3>House Building</h3><p>Casual Game Animation</p></div>
+        </div>
+        <div class="portfolio-card scroll-animate" onclick="openModal('video', 'video/무거운공격02.mp4', 'In-game Combo Attack Animation')">
+          <video src="video/무거운공격02.mp4" autoplay loop muted playsinline></video>
+          <div class="portfolio-info"><h3>Heavy Attack 02</h3><p>In-game Combo Animation</p></div>
+        </div>
+        <div class="portfolio-card scroll-animate" onclick="openModal('video', 'video/여전사공격01.mp4', 'In-game Combo Attack Animation')">
+          <video src="video/여전사공격01.mp4" autoplay loop muted playsinline></video>
+          <div class="portfolio-info"><h3>Female Warrior Attack 01</h3><p>In-game Combo Animation</p></div>
+        </div>
+        <div class="portfolio-card scroll-animate" onclick="openModal('video', 'video/여전사공격02.mp4', 'In-game Combo Attack Animation')">
+          <video src="video/여전사공격02.mp4" autoplay loop muted playsinline></video>
+          <div class="portfolio-info"><h3>Female Warrior Attack 02</h3><p>In-game Combo Animation</p></div>
+        </div>
+        <div class="portfolio-card scroll-animate" onclick="openModal('youtube', 'yCZWFycxjeI', 'Boxing Fighter Animation Resource for Sale')">
+          <img src="https://img.youtube.com/vi/yCZWFycxjeI/maxresdefault.jpg" alt="Boxing Fighter Animation" style="width:100%;height:200px;object-fit:cover;border-radius:8px 8px 0 0;">
+          <div class="portfolio-info"><h3>Boxing Fighter</h3><p>Animation Resource</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-tab-content" id="portfolio-tool">
+      <div class="portfolio-grid">
+        <div class="portfolio-card scroll-animate" onclick="openModal('youtube', 'EvPNwkK8nVU', 'BipedToJointLinker (Biped to FBX Link 3dsMax Script)')">
+          <img src="https://img.youtube.com/vi/EvPNwkK8nVU/maxresdefault.jpg" alt="BipedToJointLinker Tool" style="width:100%;height:200px;object-fit:cover;border-radius:8px 8px 0 0;">
+          <div class="portfolio-info"><h3>BipedToJointLinker</h3><p>3dsMax Script</p><p>Biped to FBX Link Tool</p></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="contact" class="scroll-animate">
+    <h2 class="scroll-animate">Contact</h2>
+    <div style="text-align:center;padding:60px 20px;">
+      <p style="font-size:1.5rem;color:#fff;margin-bottom:20px;">Please contact us via email below for any inquiries.</p>
+      <a href="mailto:artstem123@gmail.com" style="font-size:2rem;color:#1a73e8;text-decoration:none;font-weight:700;">artstem123@gmail.com</a>
+    </div>
+  </section>
+
+  <div class="footer-marquee scroll-animate-fade" style="width:100vw;background:#181c22;margin-top:32px;padding:0;">
+    <div class="scroll-bg-text">
+      <div class="text-track">ARTSTEM ARTSTEM ARTSTEM ARTSTEM ARTSTEM ARTSTEM ARTSTEM ARTSTEM ARTSTEM ARTSTEM </div>
+    </div>
+  </div>
+  <footer class="scroll-animate-fade">
+    Copyright © 2024 ArtStem. All Rights Reserved.
+  </footer>
+  <!-- 포트폴리오 모달 -->
+  <div id="modal-viewer" class="modal" onclick="closeModal(event)">
+    <span class="modal-close" onclick="closeModal(event)">&times;</span>
+    <div class="modal-content" id="modal-content"></div>
+    <div class="modal-desc" id="modal-desc"></div>
+  </div>
+
+  <script>
+
+    // 모든 섹션 id를 배열로 관리
+    const sectionIds = ['about','portfolio','contact'];
+    function showSection(id) {
+      document.getElementById('main-view').style.display = 'none';
+      sectionIds.forEach(sec => {
+        document.getElementById(sec).classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+    function backToMain() {
+      document.getElementById('main-view').style.display = 'block';
+      sectionIds.forEach(sec => {
+        document.getElementById(sec).classList.remove('active');
+      });
+    }
+    function showPortfolioTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.querySelectorAll('.portfolio-tab-content').forEach(tabContent => tabContent.classList.remove('active'));
+      document.getElementById('portfolio-' + tab).classList.add('active');
+    }
+    // 기본 탭 활성화
+    document.addEventListener('DOMContentLoaded', function() {
+      showPortfolioTab('modeling');
+    });
+    // 포트폴리오 모달 함수
+    function openModal(type, src, desc) {
+      const modal = document.getElementById('modal-viewer');
+      const content = document.getElementById('modal-content');
+      const descBox = document.getElementById('modal-desc');
+      if(type === 'img') {
+        content.innerHTML = `<img src="${src}" style="max-width:90vw;max-height:80vh;">`;
+      } else if(type === 'video') {
+        content.innerHTML = `<video src="${src.replace('mov_bbb.mp4','mov_bbb.mp4').replace('movie.mp4','movie.mp4')}" controls autoplay style="max-width:90vw;max-height:80vh;"></video>`;
+      } else if(type === 'youtube') {
+        content.innerHTML = `<iframe width="900" height="506" src="https://www.youtube.com/embed/${src}?autoplay=1" frameborder="0" allowfullscreen style="max-width:90vw;max-height:80vh;"></iframe>`;
+      }
+      descBox.textContent = desc || '';
+      modal.style.display = 'flex';
+    }
+    function closeModal(e) {
+      if(!e || e.target.classList.contains('modal') || e.target.classList.contains('modal-close')) {
+        document.getElementById('modal-viewer').style.display = 'none';
+        document.getElementById('modal-content').innerHTML = '';
+        document.getElementById('modal-desc').textContent = '';
+      }
+    }
+    // Scroll Animation Observer
+    function handleScrollAnimation(entries, observer) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        } else {
+          entry.target.classList.remove('active');
+        }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      const scrollEls = document.querySelectorAll('.scroll-animate, .scroll-animate-fade, .scroll-animate-left, .scroll-animate-right');
+      const observer = new IntersectionObserver(handleScrollAnimation, {
+        threshold: 0.15
+      });
+      scrollEls.forEach(el => {
+        observer.observe(el);
+      });
+    });
+
+
+  </script>
+</body>
+</html> 
