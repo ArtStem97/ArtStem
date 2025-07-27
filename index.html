@@ -29,9 +29,10 @@
     
     @media (max-width: 700px) {
       body::before {
-        background-size: contain;
-        background-position: center bottom;
-        opacity: 0.2;
+        background-size: 200% auto;
+        background-position: center 80%;
+        opacity: 0.15;
+        background-repeat: no-repeat;
       }
     }
     header {
@@ -97,7 +98,7 @@
     @media (max-width: 700px) {
       .hero video {
         object-fit: cover;
-        filter: brightness(0.4) blur(0.5px);
+        filter: brightness(0.3) blur(1px);
       }
     }
     .hero-content {
@@ -112,14 +113,40 @@
       max-width: 700px;
       margin: 0 auto;
     }
+    
+    @media (max-width: 700px) {
+      .hero-content {
+        background: rgba(24,28,34,0.7);
+        backdrop-filter: blur(4px);
+        padding: 30px 24px;
+        margin: 0 16px;
+        border-radius: 20px;
+      }
+    }
     .hero-content h1 {
       font-size: 2.8rem;
       margin-bottom: 18px;
       font-weight: 700;
     }
+    
+    @media (max-width: 700px) {
+      .hero-content h1 {
+        font-size: 1.8rem;
+        margin-bottom: 16px;
+        text-shadow: 0 2px 12px #000c;
+      }
+    }
     .hero-content p {
       font-size: 1.2rem;
       margin-bottom: 0;
+    }
+    
+    @media (max-width: 700px) {
+      .hero-content p {
+        font-size: 1rem;
+        line-height: 1.5;
+        text-shadow: 0 1px 8px #000c;
+      }
     }
     .category-section {
       display: flex;
@@ -219,7 +246,12 @@
       .hero-content h1 { font-size: 1.8rem; }
       .hero-content p { font-size: 1rem; }
       .hero { height: 60vh; min-height: 300px; }
-      .hero-content { padding: 24px 20px; margin: 0 16px; }
+      .hero-content { 
+        padding: 30px 24px; 
+        margin: 0 16px; 
+        background: rgba(24,28,34,0.7);
+        backdrop-filter: blur(4px);
+      }
       .logo-area { padding: 8px 0 0 16px; }
       .logo-area span { font-size: 1.4rem; }
       nav { gap: 24px; padding-bottom: 6px; }
