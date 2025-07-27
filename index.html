@@ -26,6 +26,14 @@
       background-position: center;
       opacity: 0.3;
     }
+    
+    @media (max-width: 700px) {
+      body::before {
+        background-size: contain;
+        background-position: center bottom;
+        opacity: 0.2;
+      }
+    }
     header {
       position: fixed;
       top: 0; left: 0; width: 100%;
@@ -84,6 +92,13 @@
       object-fit: cover;
       z-index: 0;
       filter: brightness(0.5) blur(1px);
+    }
+    
+    @media (max-width: 700px) {
+      .hero video {
+        object-fit: cover;
+        filter: brightness(0.4) blur(0.5px);
+      }
     }
     .hero-content {
       position: relative;
@@ -230,6 +245,8 @@
       .scroll-section .img-row { gap: 16px; margin-top: 30px; }
       .scroll-section .img-card { width: 160px; height: 120px; }
       .scroll-section .img-card .img-desc { font-size: 0.9rem; padding: 8px 10px; }
+      .portfolio-tabs { flex-wrap: wrap; gap: 8px; }
+      .tab-btn { padding: 10px 20px; font-size: 1rem; }
     }
     .main-portfolio-slider { max-width: 1200px; margin: 40px auto 0 auto; }
     .main-portfolio-slider h2 { color: #fff; font-size: 1.5rem; margin-bottom: 18px; }
@@ -280,6 +297,13 @@
       padding: 80px 0 60px 8vw;
       overflow: hidden;
     }
+    
+    @media (max-width: 700px) {
+      .scroll-section {
+        padding: 60px 0 40px 4vw;
+        min-height: 300px;
+      }
+    }
     .scroll-section::before {
       content: '';
       position: absolute;
@@ -290,6 +314,14 @@
       pointer-events: none;
       z-index: 1;
     }
+    
+    @media (max-width: 700px) {
+      .scroll-section::before {
+        background: 
+          radial-gradient(circle at 20% 30%, rgba(26,115,232,0.05) 0, transparent 40%),
+          radial-gradient(circle at 80% 70%, rgba(255,59,48,0.03) 0, transparent 40%);
+      }
+    }
     .scroll-section h1 {
       font-size: 4vw;
       font-weight: 900;
@@ -299,6 +331,13 @@
       z-index: 2;
       position: relative;
     }
+    
+    @media (max-width: 700px) {
+      .scroll-section h1 {
+        font-size: 2.5rem;
+        margin: 0 0 20px 0;
+      }
+    }
     .scroll-section .desc {
       color: #ccc;
       font-size: 1.3rem;
@@ -307,11 +346,26 @@
       z-index: 2;
       position: relative;
     }
+    
+    @media (max-width: 700px) {
+      .scroll-section .desc {
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+        max-width: 90vw;
+      }
+    }
     .scroll-section .card-row {
       display: flex;
       gap: 40px;
       z-index: 2;
       position: relative;
+    }
+    
+    @media (max-width: 700px) {
+      .scroll-section .card-row {
+        gap: 20px;
+        flex-wrap: wrap;
+      }
     }
     .scroll-section .card {
       background: rgba(24,28,34,0.85);
@@ -337,6 +391,15 @@
       margin-top: 40px;
       z-index: 2;
       position: relative;
+    }
+    
+    @media (max-width: 700px) {
+      .scroll-section .img-row {
+        gap: 16px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
     }
     .scroll-section .img-card {
       position: relative;
@@ -373,6 +436,15 @@
       align-items: center;
       justify-content: flex-start;
       position: relative;
+    }
+    
+    @media (max-width: 700px) {
+      .scroll-bg-text {
+        height: 50px;
+      }
+      .scroll-bg-text .text-track {
+        font-size: 1.8rem;
+      }
     }
     .scroll-bg-text::before {
       content: '';
